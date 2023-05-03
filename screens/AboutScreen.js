@@ -2,6 +2,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Avatar, Card, ListItem, Text } from "react-native-elements";
 import { useSelector } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import Loading from "../components/LoadingComponents";
 
 const AboutScreen = () => {
     const partners = useSelector((state) => state.partners);
@@ -15,6 +16,31 @@ const AboutScreen = () => {
                     We present a curated database of the best campsites in the vast woods and backcountry of the World Wide Web Wilderness. We increase access to adventure for the public while promoting safe and respectful use of resources. The expert wilderness trekkers on our staff personally verify each campsite to make sure that they are up to our standards. We also present a platform for campers to share reviews on campsites they have visited with each other.
                 </Text>
             </Card>
+        );
+    }
+
+    if (partners.isLoading) {
+        return (
+            <ScrollView>
+                <Mission />
+                <Card>
+                    <Card.Title>Community Partners</Card.Title>
+                    <Card.Divider />
+                    <Loading />
+                </Card>
+            </ScrollView >
+        );
+    }
+    if (partners.errMess) {
+        return (
+            <ScrollView>
+                <Mission />
+                <Card>
+                    <Card.Title>Community Partners</Card.Title>
+                    <Card.Divider />
+                    <Text>{partners.errMess}</Text>
+                </Card>
+            </ScrollView >
         );
     }
 
